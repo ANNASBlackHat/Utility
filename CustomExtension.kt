@@ -307,28 +307,11 @@ fun String.isNumeric(): Boolean{
     return matches("-?\\d+(\\.\\d+)?".toRegex())
 }
 
-fun Context.role(): RoleMobile{
-    val employee = getJson(SharedPref.EMPLOYEE_DATA, Employee::class.java)
-    return Gson().fromJson(employee?.roleMobile, RoleMobile::class.java)
-}
+fun ClosedRange<Int>.random(lastChoosen: Int = start-1): Int{
+    var choosen: Int
+    do {
+        choosen = Random().nextInt(endInclusive - start) +  start
+    }while (choosen == lastChoosen)
 
-fun Fragment.role(): RoleMobile{
-    val employee = context.getJson(SharedPref.EMPLOYEE_DATA, Employee::class.java)
-    return employee?.roleMobile?.let {
-        Gson().fromJson(employee.roleMobile, RoleMobile::class.java)
-    } ?: kotlin.run { RoleMobile() }
-}
-
-fun String?.encrypt(): String{
-    this?.let {
-        return if(isNotEmpty()) AES().encrypt(this)?.toHex() ?: "" else ""
-    }
-    return ""
-}
-
-fun String?.decrypt(): String{
-    this?.let {
-        return if(isNotEmpty()) AES.decryptStr(this) else ""
-    }
-    return ""
+    return choosen
 }
