@@ -315,3 +315,21 @@ fun ClosedRange<Int>.random(lastChoosen: Int = start-1): Int{
 
     return choosen
 }
+
+fun ViewPager.OnPageSelected(selected: (Int) -> Unit) {
+    addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+        override fun onPageScrollStateChanged(state: Int) {}
+        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+        override fun onPageSelected(position: Int) {
+            selected(position)
+        }
+    })
+}
+
+infix fun TextInputEditText.isMatch(secondField: TextInputEditText): Boolean{
+    return text.toString() == secondField.text.toString()
+}
+
+infix fun TextInputEditText.isNotMatch(secondField: TextInputEditText): Boolean{
+    return text.toString() != secondField.text.toString()
+}

@@ -36,3 +36,23 @@ fun GetIpAddress(): String{
     }
     return ip
 }
+
+fun IsValidField(vararg views: View): Boolean {
+    var status = true
+    for (v in views) {
+        if (v is TextInputEditText) {
+            if (v.text.toString().isEmpty()) {
+                v.error = "Field can't be blank"
+                status = false
+            } else {
+                v.error = null
+            }
+        } else if (v is MaterialBetterSpinner) {
+            if (v.editableText.toString().isEmpty()) {
+                status = false
+                v.error = "Field can't be blank"
+            }
+        }
+    }
+    return status
+}
