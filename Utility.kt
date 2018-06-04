@@ -56,3 +56,26 @@ fun IsValidField(vararg views: View): Boolean {
     }
     return status
 }
+
+fun copyAsset(context: Context, assetFileName: String, fileOut: File): Boolean{
+    var input: InputStream? = null
+    var output: OutputStream? = null
+    try {
+        input = context.assets.open(assetFileName)
+        output = FileOutputStream(fileOut)
+        val buffer = ByteArray(1024)
+        var read = input.read(buffer)
+        while (read != -1){
+            output.write(buffer, 0, read)
+            read = input.read(buffer)
+        }
+        return true
+    } catch (e: Exception) {
+        println("Copy asset Error $e")
+        context.toast("Error $e")
+    } finally {
+        input?.close()
+        output?.close()
+    }
+    return false
+}
